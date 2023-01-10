@@ -11,6 +11,7 @@ public class ChangeScene : MonoBehaviour
         {
             case "Story_btn":
                 Debug.Log("스토리 모드를 선택");
+                SceneManager.LoadScene("inGame_Scene");   //메인 씬을 불러옵니다
                 break;
 
             case "Continue_btn":
