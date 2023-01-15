@@ -26,7 +26,16 @@ public class ChangeScene : MonoBehaviour
                 Debug.Log("컬렉션을 선택");
                 break;
 
+            case "MainMenu_btn":
+                Debug.Log("메인메뉴 선택");
+                Invoke("GoMainMenu", 2f);
+                break;
         }
+    }
+
+    void GoMainMenu()
+    {
+        SceneManager.LoadScene("Main_Scene");
     }
 
 }
