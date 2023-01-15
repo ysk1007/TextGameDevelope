@@ -16,15 +16,23 @@ public class FadeInOut : MonoBehaviour
     private FadeState fadeState; //페이드 효과 상태
 
     Image image;    // Image 형 image 오브젝트를 담을 변수
+    Scene scene;    
 
     // Start is called before the first frame update
+
+   
     void Start()
     {
 
         image = gameObject.GetComponent<Image>();   //스크립트가 담긴 오브젝트의 Image 속성을 가져옴
-        OnFade(FadeState.FadeIn);   //OnFade 함수를 실행 시켜라 Fade 상태는 FadeIn
+        
+        if(SceneManager.GetActiveScene().name == "Main_Scene")
+        {
+            OnFade(FadeState.FadeIn);   //OnFade 함수를 실행 시켜라 Fade 상태는 FadeIn
+        }
 
     }
+
 
     public void OnFade(FadeState state) //Fade 상태에 따라 Fade 효과를 주는 함수
     {
@@ -89,6 +97,32 @@ public class FadeInOut : MonoBehaviour
         }
 
         this.gameObject.SetActive(false);   //오브젝트 비 활성화
+    }
+
+    //위 코루틴과 같은 효과이고 매개변수 image를 추가해 image 전용 Fade 코루틴
+    public IEnumerator Fade(float start, float end, Image image)
+    {
+        float currentTime = 0.0f;
+        float percent = 0.0f;
+
+        while (percent < 1)
+        {
+            currentTime += Time.deltaTime;
+            percent = currentTime / fadeTime;
+
+            Color color;
+            color = image.color;
+            color.a = Mathf.Lerp(start, end, percent);
+            image.color = color;
+
+            yield return null;
+
+        }
+    }
+
+    public void Fadeoutflow()
+    {
+        OnFade(FadeState.FadeOut);   //OnFade 함수를 실행 시켜라 Fade 상태는 FadeIn
     }
 
 }
